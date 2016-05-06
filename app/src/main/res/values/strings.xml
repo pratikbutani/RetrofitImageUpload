@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">UploadImage</string>
+    <string name="action_settings">Settings</string>
+    <string name="string_pick_up_image">Click Anywhere to Pickup Image</string>
+
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="string_help_text"> The permission is missing.\n\nTo grant this permission click on Settings, then Permissions and turn the permission on.\n\nThen click back twice to return to the app</string>
+    <string name="quit">Exit App</string>
+    <string name="string_title_upload_progressbar_">Uploading.. Wait for a while...</string>
+    <string name="string_upload_success">File Uploaded Successfully..</string>
+    <string name="string_upload_fail">Something went wrong</string>
+    <string name="string_internet_connection_warning">Internet Connection not Available</string>
+    <string name="string_message_to_attach_file">First attach file to upload</string>
+    <string name="string_choose_image">Select Image to Upload</string>
+    <string name="string_unable_to_pick_image">Unable to Pickup Image</string>
+    <string name="string_unable_to_load_image">Unable to Load Image</string>
+    <string name="string_reselect">Click on Image to Reselect</string>
+
+</resources>
