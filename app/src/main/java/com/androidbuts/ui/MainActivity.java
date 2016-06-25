@@ -107,59 +107,75 @@ public class MainActivity extends AppCompatActivity {
                      * Uploading AsyncTask
                      */
                     if (InternetConnection.checkConnection(mContext)) {
-
-                        final ProgressDialog progressDialog;
-                        progressDialog = new ProgressDialog(MainActivity.this);
-                        progressDialog.setMessage(getString(R.string.string_title_upload_progressbar_));
-                        progressDialog.show();
-
-                        /*****************************************/
-
                         /******************Retrofit***************/
-
-                        ApiService service = RetroClient.getApiService();
-
-                        File file = new File(imagePath);
-
-                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-                        // MultipartBody.Part is used to send also the actual file name
-                        MultipartBody.Part body =
-                                MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
-
-                        Call<Result> resultCall = service.uploadImage(body);
-
-                        resultCall.enqueue(new Callback<Result>() {
-                            @Override
-                            public void onResponse(Call<Result> call, Response<Result> response) {
-
-                                progressDialog.dismiss();
-
-                                if (response.isSuccessful()) {
-                                    if (response.body().getResult().equals("success"))
-                                        Snackbar.make(parentView, R.string.string_upload_success, Snackbar.LENGTH_LONG).show();
-                                    else
-                                        Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
-
-                                } else {
-                                    Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
-                                }
-                                imagePath = "";
-                                textView.setVisibility(View.VISIBLE);
-                                imageView.setVisibility(View.INVISIBLE);
-                            }
-
-                            @Override
-                            public void onFailure(Call<Result> call, Throwable t) {
-                                progressDialog.dismiss();
-                            }
-                        });
+                        uploadImage();
                     } else {
                         Snackbar.make(parentView, R.string.string_internet_connection_warning, Snackbar.LENGTH_INDEFINITE).show();
                     }
                 } else {
                     Snackbar.make(parentView, R.string.string_message_to_attach_file, Snackbar.LENGTH_INDEFINITE).show();
                 }
+            }
+        });
+    }
+
+    /**
+     * Upload Image Client Code
+     */
+    private void uploadImage() {
+
+        /**
+         * Progressbar to Display if you need
+         */
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage(getString(R.string.string_title_upload_progressbar_));
+        progressDialog.show();
+
+        //Create Upload Server Client
+        ApiService service = RetroClient.getApiService();
+
+        //File creating from selected URL
+        File file = new File(imagePath);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
+
+        Call<Result> resultCall = service.uploadImage(body);
+
+        // finally, execute the request
+        resultCall.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+                progressDialog.dismiss();
+
+                // Response Success or Fail
+                if (response.isSuccessful()) {
+                    if (response.body().getResult().equals("success"))
+                        Snackbar.make(parentView, R.string.string_upload_success, Snackbar.LENGTH_LONG).show();
+                    else
+                        Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
+
+                } else {
+                    Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
+                }
+
+                /**
+                 * Update Views
+                 */
+                imagePath = "";
+                textView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
             }
         });
     }

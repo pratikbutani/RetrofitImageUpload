@@ -20,5 +20,4 @@ public interface ApiService {
     @Multipart
     @POST("upload.php")
     Call<Result> uploadImage(@Part MultipartBody.Part file);
-
 }
