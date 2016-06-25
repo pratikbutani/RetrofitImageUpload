@@ -22,7 +22,7 @@ public class RetroClient {
     }
 
     /**
-     * Get Table Booking Charge
+     * Get Retro Client
      *
      * @return JSON Object
      */

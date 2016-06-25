@@ -1,4 +1,4 @@
-package com.androidbuts.uploadimage;
+package com.androidbuts.ui;
 
 import org.junit.Test;
 

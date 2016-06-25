@@ -1,4 +1,4 @@
-package com.androidbuts.uploadimage;
+package com.androidbuts.ui;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidbuts.api.ApiService;
 import com.androidbuts.api.RetroClient;
@@ -136,14 +135,14 @@ public class MainActivity extends AppCompatActivity {
 
                                 progressDialog.dismiss();
 
-                                if(response.isSuccessful()) {
+                                if (response.isSuccessful()) {
                                     if (response.body().getResult().equals("success"))
-                                        Toast.makeText(getApplicationContext(), R.string.string_upload_success, Toast.LENGTH_LONG).show();
+                                        Snackbar.make(parentView, R.string.string_upload_success, Snackbar.LENGTH_LONG).show();
                                     else
-                                        Toast.makeText(getApplicationContext(), R.string.string_upload_fail, Toast.LENGTH_LONG).show();
+                                        Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), R.string.string_upload_fail, Toast.LENGTH_LONG).show();
+                                    Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
                                 }
                                 imagePath = "";
                                 textView.setVisibility(View.VISIBLE);
@@ -212,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.with(mContext).load(new File(imagePath))
                         .into(imageView);
 
-                Toast.makeText(mContext, R.string.string_reselect, Toast.LENGTH_LONG).show();
+                Snackbar.make(parentView, R.string.string_reselect, Snackbar.LENGTH_LONG).show();
                 cursor.close();
 
                 textView.setVisibility(View.GONE);
@@ -222,8 +221,6 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setVisibility(View.GONE);
                 Snackbar.make(parentView, R.string.string_unable_to_load_image, Snackbar.LENGTH_LONG).show();
             }
-
-
         }
     }
 
